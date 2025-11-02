@@ -1,0 +1,40 @@
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import NotFound from "@/pages/NotFound";
+import { Route, Switch } from "wouter";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import Home from "./pages/Home";
+import Chat from "./pages/Chat";
+import NaverLogin from "./pages/NaverLogin";
+import GoogleLogin from "./pages/GoogleLogin";
+
+function Router() {
+  return (
+    <Switch>
+      <Route path={"/"} component={Home} />
+      <Route path={"/chat"} component={Chat} />
+      <Route path={"/naver-login"} component={NaverLogin} />
+      <Route path={"/api/oauth/naver/callback"} component={NaverLogin} />
+      <Route path={"/google-login"} component={GoogleLogin} />
+      <Route path={"/api/oauth/google/callback"} component={GoogleLogin} />
+      <Route path={"/404"} component={NotFound} />
+      <Route component={NotFound} />
+    </Switch>
+  );
+}
+
+function App() {
+  return (
+    <ErrorBoundary>
+      <ThemeProvider defaultTheme="dark">
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
+  );
+}
+
+export default App;
